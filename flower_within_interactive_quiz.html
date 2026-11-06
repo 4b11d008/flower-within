@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f2ec">
+<title>你是哪一種花？｜Flower Within</title>
+<style>
+:root{--paper:#f7f2ec;--ink:#34352f;--muted:#85847b;--green:#71816b;--line:#e8e0d6;--white:#fffdfa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",sans-serif}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:760px;margin:auto;padding:24px 18px 48px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;letter-spacing:2px}
+.brand{font-family:Georgia,serif;font-size:14px;color:var(--green);letter-spacing:3px}
+.hero{text-align:center;padding:48px 10px 30px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--green)}
+h1{font-family:Georgia,"Noto Serif TC",serif;font-weight:500;font-size:clamp(34px,8vw,54px);line-height:1.2;margin:15px 0}
+.hero p{color:var(--muted);font-size:14px;line-height:1.9;margin:0}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:25px;padding:clamp(20px,5vw,34px);box-shadow:0 14px 40px #51432a0a}
+.intro-art{height:180px;display:grid;place-items:center;font-size:86px;background:linear-gradient(145deg,#f2e9df,#e8eee4);border-radius:19px;margin-bottom:25px}
+.primary,.secondary{border:0;border-radius:99px;padding:14px 24px;min-height:48px}
+.primary{background:var(--green);color:white}
+.secondary{background:#eee9e1;color:var(--ink)}
+.center{text-align:center}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px}
+.progressline{height:5px;background:#eee9e1;border-radius:9px;overflow:hidden;margin:8px 0 25px}
+.progressline span{display:block;height:100%;width:0;background:var(--green);transition:width .25s}
+.step{font-size:12px;color:var(--muted);letter-spacing:1px}
+.question{font-family:Georgia,"Noto Serif TC",serif;font-size:25px;line-height:1.5;margin:13px 0 23px}
+.options{display:grid;gap:11px}
+.option{border:1px solid var(--line);background:#fffdfa;border-radius:15px;padding:16px;text-align:left;color:var(--ink);transition:.2s;display:flex;gap:12px;align-items:center}
+.option:hover,.option:focus{border-color:var(--green);background:#f4f6f0;outline:none}
+.option .emoji{font-size:22px;width:30px;text-align:center}
+.option.selected{border-color:var(--green);background:#eef2e9}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+.nav button:disabled{opacity:.35;cursor:not-allowed}
+.result-head{text-align:center}
+.flower{font-size:100px;line-height:1.4;margin:12px 0}
+.flower-name{font-family:Georgia,"Noto Serif TC",serif;font-size:35px;font-weight:500;margin:5px 0}
+.latin{font-family:Georgia,serif;color:var(--muted);font-style:italic;font-size:13px}
+.result-tag{display:inline-block;background:#eef1e9;color:#58684f;padding:7px 13px;border-radius:99px;font-size:12px;margin:15px 0}
+.description{line-height:2;color:#65645c;font-size:14px;text-align:left;margin:20px 0}
+.traits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.traits span{background:#f1ece5;border-radius:99px;padding:8px 12px;font-size:12px}
+.quote{font-family:Georgia,"Noto Serif TC",serif;text-align:center;font-size:19px;line-height:1.8;color:var(--green);padding:20px 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:22px 0}
+.note{font-size:11px;color:var(--muted);line-height:1.8;text-align:center;margin-top:20px}
+.hidden{display:none!important}
+footer{text-align:center;color:#a19a8e;font-size:11px;letter-spacing:1px;margin-top:25px}
+@media(min-width:600px){.options{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span class="brand">FLOWER WITHIN</span><span>A LITTLE PERSONALITY GARDEN</span></div>
+  <header class="hero">
+    <div class="eyebrow">DISCOVER YOUR INNER FLOWER</div>
+    <h1>你是哪一種花？</h1>
+    <p>每個人心裡，都有一朵正在盛開的花。<br>用幾個小問題，找到藏在你性格裡的花。</p>
+  </header>
+
+  <section class="panel center" id="start">
+    <div class="intro-art">🌷</div>
+    <div class="eyebrow">A SMALL JOURNEY TO YOURSELF</div>
+    <h2 style="font-family:Georgia,'Noto Serif TC',serif;font-weight:500;font-size:25px">準備好認識自己了嗎？</h2>
+    <p style="color:var(--muted);font-size:14px;line-height:1.9">沒有標準答案，選最接近直覺的那一個就好。<br>完成 7 道題目，看看你的靈魂是哪一種花。</p>
+    <div class="actions"><button class="primary" id="begin">開始測驗　→</button></div>
+    <div class="note">約需 1 分鐘・結果僅供趣味參考</div>
+  </section>
+
+  <section class="panel hidden" id="quiz">
+    <div class="step" id="step">QUESTION 01 / 07</div>
+    <div class="progressline"><span id="bar"></span></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="nav">
+      <button class="secondary" id="prev">← 上一題</button>
+      <button class="primary" id="next" disabled>下一題 →</button>
+    </div>
+  </section>
+
+  <section class="panel hidden" id="result">
+    <div class="result-head">
+      <div class="eyebrow">YOUR INNER FLOWER</div>
+      <div class="flower" id="flowerEmoji"></div>
+      <div class="latin" id="latin"></div>
+      <h2 class="flower-name" id="flowerName"></h2>
+      <div class="result-tag" id="tagline"></div>
+    </div>
+    <p class="description" id="description"></p>
+    <div class="traits" id="traits"></div>
+    <div class="quote" id="quote"></div>
+    <div class="actions">
+      <button class="primary" id="again">再測一次 ↻</button>
+      <button class="secondary" id="share">複製我的花語</button>
+    </div>
+    <div class="note">每一朵花都有自己的季節，你也一樣。<br>測驗結果為趣味性格探索，並非心理測驗或診斷。</div>
+  </section>
+  <footer>FLOWER WITHIN · BLOOM IN YOUR OWN WAY</footer>
+</div>
+<script>
+const questions=[
+ {q:"如果今天突然多出一整天空閒，你會？",a:[["🌿","找個安靜的地方，享受自己的時間"],["☀️","約喜歡的人出門，留下新回憶"],["📖","做一直想做、卻還沒開始的事"],["🌙","隨心所欲，不安排任何計畫"]]},
+ {q:"遇到不熟悉的環境，你通常會？",a:[["👀","先觀察，熟悉後再慢慢加入"],["🌼","主動打招呼，讓氣氛熱絡起來"],["🧭","保持好奇，想探索看看"],["🫧","有點慢熱，但會努力適應"]]},
+ {q:"朋友難過時，你最常做的是？",a:[["🤍","安靜陪伴，讓對方知道我在"],["🫶","給予鼓勵，想辦法讓他開心"],["🪴","認真聆聽，陪他整理想法"],["☁️","給他空間，等他想說再說"]]},
+ {q:"你希望別人怎麼記得你？",a:[["🌱","溫柔、可靠，讓人感到安心"],["🌞","有活力，總能帶來好心情"],["🌹","有想法、有個性，不隨波逐流"],["🌌","有點神祕，卻值得慢慢認識"]]},
+ {q:"面對一個很想完成的目標，你會？",a:[["🐢","照自己的步調，一點一點完成"],["🔥","充滿幹勁，立刻開始行動"],["📝","先規劃好，再有條理地執行"],["🌊","跟著感覺走，邊做邊調整"]]},
+ {q:"哪一種風景最能讓你放鬆？",a:[["🌳","雨後的森林與青草氣味"],["🌻","陽光灑落、熱鬧明亮的花園"],["🌺","有風、有海，遼闊自由的地方"],["🌙","夜晚安靜的小路與微光"]]},
+ {q:"如果用一句話形容最近的自己，你會選？",a:[["🌿","正在慢慢長成更穩定的模樣"],["✨","想把生活過得更精彩一些"],["🌹","即使不容易，也不想放棄自己"],["🦋","還在探索，但期待新的可能"]]}
+];
+const flowers=[
+ {name:"鈴蘭",latin:"Convallaria majalis",emoji:"鈴蘭",tag:"溫柔而堅定的守護者",desc:"你有一種安靜卻深刻的力量。比起成為人群中最耀眼的存在，你更在意身邊的人是否安心。你不一定擅長把心意說出口，卻總會用細節表達在乎。別忘了，溫柔不代表沒有自己的界線，你也值得被好好照顧。",traits:["細膩敏感","安靜可靠","重視真心"],quote:"「不必大聲盛開，也能讓世界聞見你的溫柔。」"},
+ {name:"向日葵",latin:"Helianthus annuus",emoji:"向日葵",tag:"把光帶給別人的行動派",desc:"你像一束明亮的陽光，總有辦法替平凡的日子添上一點色彩。你喜歡新鮮感，也願意為在乎的人付出熱情。偶爾你也會疲憊，甚至不知道該往哪裡走；請記得，向著自己喜歡的方向，也是一種勇敢。",traits:["熱情開朗","樂於分享","勇於嘗試"],quote:"「你不必永遠發光，偶爾休息也是生活的一部分。」"},
+ {name:"玫瑰",latin:"Rosa",emoji:"玫瑰",tag:"有棱角也有柔軟的靈魂",desc:"你有自己的標準，不容易被別人的聲音左右。看似有距離感，其實心裡藏著很深的情感。你願意認真對待喜歡的人事物，也不想隨便妥協。你的刺不是為了傷人，而是提醒世界：珍貴的事物值得被珍惜。",traits:["有主見","情感豐富","勇敢真誠"],quote:"「帶著自己的棱角，也能開出漂亮的花。」"},
+ {name:"夜來香",latin:"Cestrum nocturnum",emoji:"🌙",tag:"在自己的時區裡發光",desc:"你喜歡保留一點自己的空間，也習慣在安靜時思考很多事情。你不急著讓所有人理解自己，更相信時間會讓真正合拍的人留下。你有獨特的觀察力，許多細節都被你悄悄收藏。請相信，慢慢被看見也很好。",traits:["獨立慢熱","觀察敏銳","富有想像"],quote:"「不是每朵花都在白天盛開，你也有自己的時刻。」"},
+ {name:"雛菊",latin:"Bellis perennis",emoji:"🌼",tag:"把日常過成小小奇蹟的人",desc:"你容易被生活裡的小事打動，一句話、一場散步或一份小驚喜，都能成為你珍藏的回憶。你有好奇心，也願意用自己的方式探索世界。即使偶爾迷惘，你仍保有重新開始的能力。別小看這份純粹，它很珍貴。",traits:["真誠可愛","富有好奇心","樂於發現美好"],quote:"「平凡的日子裡，也藏著值得期待的事情。」"},
+ {name:"鐵海棠",latin:"Euphorbia milii",emoji:"🌺",tag:"帶著韌性持續盛開的人",desc:"你或許不是一路順遂的人，卻有著不輕易放棄的韌性。遇到困難時，你會受傷、會猶豫，但最後仍試著找到自己的方向。你有柔軟的一面，也有不願輕易示弱的堅持。請記得，堅強不代表不能求助。",traits:["堅韌獨立","外柔內剛","不輕言放棄"],quote:"「即使帶著刺，也沒有停止開花。」"}
+];
+let answers=Array(questions.length).fill(null),index=0;
+const $=id=>document.getElementById(id);
+function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
+function render(){
+ const q=questions[index];$("step").textContent=`QUESTION ${String(index+1).padStart(2,"0")} / 07`;
+ $("bar").style.width=((index+1)/questions.length*100)+"%";$("question").textContent=q.q;
+ $("options").innerHTML="";
+ q.a.forEach((a,i)=>{const b=document.createElement("button");b.className="option"+(answers[index]===i?" selected":"");b.innerHTML=`<span class="emoji">${a[0]}</span><span>${a[1]}</span>`;b.onclick=()=>{answers[index]=i;render();};$("options").appendChild(b);});
+ $("prev").disabled=index===0;$("next").disabled=answers[index]===null;$("next").textContent=index===questions.length-1?"看看我的花 →":"下一題 →";
+}
+function finish(){
+ // Each answer contributes a preference point; map the most frequent choice to a flower.
+ const counts=[0,0,0,0];answers.forEach(v=>counts[v]++);
+ const max=Math.max(...counts);const tied=counts.map((v,i)=>v===max?i:-1).filter(v=>v>=0);
+ const pick=tied[(answers.reduce((s,v)=>s+v,0)+answers[0])%tied.length];
+ const f=flowers[pick];$("flowerEmoji").textContent=["🤍","🌻","🌹","🌙","🌼","🌺"][pick];
+ $("latin").textContent=f.latin;$("flowerName").textContent=f.name;$("tagline").textContent=f.tag;
+ $("description").textContent=f.desc;$("traits").innerHTML=f.traits.map(t=>`<span>${t}</span>`).join("");$("quote").textContent=f.quote;
+ $("result").dataset.summary=`我的內在花朵是「${f.name}」｜${f.tag}\n${f.quote}`;
+ show("result");
+}
+$("begin").onclick=()=>{index=0;show("quiz");render();};
+$("prev").onclick=()=>{if(index>0){index--;render();}};
+$("next").onclick=()=>{if(answers[index]===null)return;if(index<questions.length-1){index++;render();}else finish();};
+$("again").onclick=()=>{answers=Array(questions.length).fill(null);index=0;show("start");};
+$("share").onclick=async()=>{const t=$("result").dataset.summary;try{await navigator.clipboard.writeText(t);$("share").textContent="已複製 ✓";}catch(e){$("share").textContent="請手動抄下花語";}};
+</script>
+</body>
+</html>
